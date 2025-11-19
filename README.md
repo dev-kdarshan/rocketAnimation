@@ -1,70 +1,147 @@
-# Getting Started with Create React App
+# Animated Intro Screen – React + GSAP Timeline
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project recreates a cinematic space intro sequence using **React**, **GSAP Timeline**, and **responsive design techniques**.  
+The animation contains a diagonal rocket launch, glowing star patches, faint background stars, and a sliding message box with an interactive button.
 
-## Available Scripts
+All animations are built using **gsap.timeline()**, complete with:
 
-In the project directory, you can run:
+- `duration`
+- `delay`
+- `ease`
+- `yoyo`
+- `repeat`
+- sequencing control
 
-### `npm start`
+[click here to show deployed project](https://gsap-rocket-animation.netlify.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Left & Right Star Patches (Nebula)
+A GSAP-powered faint starfield is generated dynamically inside the full-screen animation holder:
 
-### `npm run build`
+- Circular random distribution
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Natural density falloff
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- GSAP opacity yoyo 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Unique blob-shaped containers
 
-### `npm run eject`
+- Soft blur glow effect
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Star patch twinkles:**
+```js
+   gsap.fromTo(
+      star,
+       { opacity: Math.random() * 0.4 },
+        {
+          opacity: 1,
+          duration: 1 + Math.random(),
+          repeat: -1,
+          yoyo: true
+        }
+      );
+```
+**2. Rocket Animation (Diagonal Launch)**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The rocket moves from bottom-left to top-right using a GSAP timeline with easing, delay, and duration:
+```js
+    const tl = gsap.timeline({
+      defaults: { duration: 2, ease: "power3.inOut" }
+    });
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    tl.fromTo(
+    rocketRef.current,
+    {
+        x: "-30vw",  
+        y: "100vh",   
+        opacity: 0,
+    },
+    {
+        x: "92vw",
+        y: "-22vh",
+        opacity: 1,
+        duration: 4,
+        ease: "power2.inOut"
+    }
+    );
+```
+**Rocket Behavior:**
+- Smooth acceleration
+- Diagonal travel
+- Fade-in takeoff
+- Slight rotation lift
+- Fully responsive (vw + vh units)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**3. Message Box Slide-In**
 
-## Learn More
+A centered glassmorphism message box slides from the right to the center using:
+- GSAP Timeline
+- Delay to sync with rocket
+- Ease for smooth slide
+- Fade + scale intro
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```js
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    tl.fromTo(
+      boxRef.current,
+      {
+        x: "120vw",   
+        opacity: 0,
+        scale: 0.8
+      },
+      {
+        x: "-50%",    
+        opacity: 1,
+        scale: 1,
+        duration: 3,
+        delay: 1.5
+      }
+    );
+```
+---
+**Fully Responsive Design:**
 
-### Code Splitting
+This project uses:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- vw and vh units for animation
+- Tablet-specific breakpoints (768px–1024px)
+- Mobile (<768px) optimization
+- Flexible star patch sizing
+- Rocket resizing
+- Message box scaling
 
-### Analyzing the Bundle Size
+These ensure perfect display on:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Mobile phones
+- Tablets
+- Laptops
+- and mostly all screens
 
-### Making a Progressive Web App
+**Technologies Used:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React
+- GreenSock Animation Platform (for animations)
+- Cascading Style Sheets
+- deployed using netlify to direct view
+---
+**How to Run:**
+```js
+npm install
+npm install gsap
+npm start 
+```
+**Then open:**
+```js
+http://localhost:3000
+```
+---
+**Deployed using netlifty**
+```js
+npm run dev
+```
+- for simple updation in future
