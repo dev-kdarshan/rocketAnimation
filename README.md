@@ -141,7 +141,10 @@ http://localhost:3000
 ```
 ---
 **Deployed using netlifty**
+
+- created build of the project 
+- created gsap repository to future updation through latest commit
+
 ```js
-npm run dev
+npm run build
 ```
-- for simple updation in future
